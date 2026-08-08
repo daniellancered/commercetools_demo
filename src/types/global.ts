@@ -5,9 +5,9 @@ export type Product = {
   description?: string;
   slug: string;
   categories?: ProductCategory[];
-  variants: ProductVariant;
+  mainVariant: ProductVariant;
+  variants?: ProductVariant[];
   productType?: ProductType;
-  attributes?: ProductAttributes;
 };
 
 export type ProductVariant = {
@@ -20,6 +20,7 @@ export type ProductVariant = {
     isOnStock: boolean;
     availableQuantity: number;
   };
+  attributes?: ProductAttributes;
 };
 
 export type ProductImage = {
@@ -37,7 +38,7 @@ export type ProductCategory = {
 
 export type ProductType = {
   name: string;
-}
+};
 
 export type ProductAttributes = {
   [key: string]: string;
@@ -45,14 +46,15 @@ export type ProductAttributes = {
 
 export type CartItem = {
   product: Product;
+  variant: ProductVariant;
   quantity: number;
 };
 
 export type CartContextType = {
   items: CartItem[];
   isOpen: boolean;
-  addToCart: (product: Product) => void;
-  removeFromCart: (productId: string) => void;
+  addToCart: (product: Product, variant: ProductVariant) => void;
+  removeFromCart: (variantKey: string) => void;
   closeCart: () => void;
   openCart: () => void;
 };

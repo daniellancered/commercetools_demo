@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 
-import AddToCartButton from '@/components/cart/AddToCart';
-import ProductGallery from '@/components/products/ProductGallery';
+import ProductDetail from '@/components/products/ProductDetail';
 import { getProduct } from '@/lib/commercetools/products';
 
 type ProductPageProps = {
@@ -15,65 +14,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   try {
     const product = await getProduct(key);
-
-    return (
-      <div className="mx-auto max-w-7xl px-6 py-10">
-        <div className="grid gap-10 md:grid-cols-2">
-          <ProductGallery images={product.variants.images} productName={product.name} />
-
-          <div className="flex flex-col">
-            <div className="mb-3 flex flex-wrap gap-2">
-              {product.categories?.map((category) => (
-                <span
-                  key={category.id}
-                  className="border-primary text-secondary rounded-md border px-2 py-1 text-xs font-medium"
-                >
-                  {category.name}
-                </span>
-              ))}
-            </div>
-
-            <h1 className="text-secondary text-3xl font-bold">{product.name}</h1>
-
-            <p className="text-secondary mt-4 text-3xl font-bold">{product.variants.price}</p>
-
-            <div className="mt-6">
-              {product.variants.availability.isOnStock ? (
-                <span className="bg-primary/90 rounded-full px-3 py-1 text-sm font-semibold text-white">
-                  In Stock
-                </span>
-              ) : (
-                <span className="rounded-full bg-red-500/90 px-3 py-1 text-sm font-semibold text-white">
-                  Out of Stock
-                </span>
-              )}
-            </div>
-
-            <p className="text-secondary mt-8 leading-relaxed">{product.description}</p>
-
-            <div className="mt-8">
-              <AddToCartButton product={product} />
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-16 pt-10">
-          <h2 className="text-secondary text-2xl font-bold">Product Details</h2>
-          {product.attributes && (
-            <table className="mt-8 w-full border-collapse">
-              <tbody>
-                {Object.entries(product.attributes).map(([name, value]) => (
-                  <tr key={name} className="border-b">
-                    <th className="w-1/3 py-3 pr-4 text-left font-semibold">{name}</th>
-                    <td className="py-3">{value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-      </div>
-    );
+    return <ProductDetail product={product} />;
   } catch {
     notFound();
   }

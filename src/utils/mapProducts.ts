@@ -2,7 +2,7 @@ import type { Product as CtpProduct } from '@commercetools/platform-sdk';
 
 import type { Product } from '@/types/global';
 
-import { mapAttributes } from './mapAttributes';
+import { mapVariant } from './mapVariant';
 
 const LOCALE = 'en-US';
 
@@ -25,30 +25,14 @@ export function mapProducts(products: CtpProduct[]): Product[] {
           name: category.obj!.name[LOCALE],
           slug: category.obj!.slug[LOCALE],
         })),
-      variants: {
-        id: masterVariant.id,
-        sku: masterVariant.sku,
-        key: masterVariant.key,
-        price: `$${(
-          masterVariant.prices!.find((price) => price.country === 'US')!.value.centAmount / 100
-        ).toFixed(2)}`,
-        images: masterVariant.images?.map((image) => ({
-          url: image.url,
-          width: image.dimensions.w,
-          height: image.dimensions.h,
-        })),
-        availability: {
-          isOnStock: masterVariant!.availability!.isOnStock ?? false,
-          availableQuantity: masterVariant!.availability!.availableQuantity ?? 0,
-        },
-      },
+      mainVariant: mapVariant(masterVariant, LOCALE),
+      ...(current.variants.length && {
+        variants: current.variants.map((variant) => mapVariant(variant, LOCALE, masterVariant)),
+      }),
       ...(product.productType.obj && {
         productType: {
           name: product.productType.obj.name,
         },
-      }),
-      ...(masterVariant.attributes?.length && {
-        attributes: mapAttributes(masterVariant.attributes, LOCALE),
       }),
     };
   });

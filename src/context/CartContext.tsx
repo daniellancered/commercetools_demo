@@ -2,7 +2,7 @@
 
 import { type ReactNode, createContext, useContext, useState } from 'react';
 
-import type { CartContextType, CartItem, Product } from '@/types/global';
+import type { CartContextType, CartItem, Product, ProductVariant } from '@/types/global';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -10,24 +10,31 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  function addToCart(product: Product) {
+  function addToCart(product: Product, variant: ProductVariant) {
     setItems((current) => {
-      const existing = current.find((item) => item.product.id === product.id);
+      const existing = current.find((item) => item.variant.key === variant.key);
 
       if (existing) {
         return current.map((item) =>
-          item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item,
+          item.variant.key === variant.key ? { ...item, quantity: item.quantity + 1 } : item,
         );
       }
 
-      return [...current, { product, quantity: 1 }];
+      return [
+        ...current,
+        {
+          product,
+          variant,
+          quantity: 1,
+        },
+      ];
     });
 
     setIsOpen(true);
   }
 
-  function removeFromCart(productId: string) {
-    setItems((current) => current.filter((item) => item.product.id !== productId));
+  function removeFromCart(variantKey: string) {
+    setItems((current) => current.filter((item) => item.variant.key !== variantKey));
   }
 
   return (

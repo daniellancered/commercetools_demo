@@ -7,7 +7,7 @@ import AddToCartButton from '@/components/cart/AddToCart';
 import { Product } from '@/types/global';
 
 export default function ProductCard({ product }: { product: Product }) {
-  const thumbnail = product.variants.images?.[0]?.url || '/placeholder.webp';
+  const thumbnail = product.mainVariant.images?.[0]?.url || '/placeholder.webp';
 
   return (
     <div className="group border-accent-3 relative flex h-full flex-col overflow-hidden rounded-xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
@@ -24,7 +24,7 @@ export default function ProductCard({ product }: { product: Product }) {
             sizes="(max-width: 768px) 100vw, 25vw"
           />
 
-          {product.variants.availability.isOnStock && (
+          {product.mainVariant.availability.isOnStock && (
             <div className="bg-primary/90 absolute z-10 rounded-full px-3 py-1 text-xs font-semibold text-white shadow-sm">
               In Stock
             </div>
@@ -51,11 +51,13 @@ export default function ProductCard({ product }: { product: Product }) {
 
       <div className="mt-auto flex items-center justify-between">
         <Link href={`/products/${product.key}`} className="w-full flex-1 p-5">
-          <span className="text-secondary h-full text-xl font-bold">{product.variants.price}</span>
+          <span className="text-secondary h-full text-xl font-bold">
+            ${product.mainVariant.price}
+          </span>
         </Link>
 
         <div className="mr-5">
-          <AddToCartButton product={product} />
+          <AddToCartButton product={product} variant={product.mainVariant} />
         </div>
       </div>
     </div>

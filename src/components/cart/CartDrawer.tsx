@@ -8,25 +8,22 @@ export default function CartDrawer() {
   if (!isOpen) return null;
 
   const total = items.reduce((sum, item) => {
-    const price = item.product.variants.price;
-    return sum + Number(price.replace('$', '')) * item.quantity;
+    return sum + Number(item.variant.price) * item.quantity;
   }, 0);
 
   return (
-    <div className="fixed inset-0 z-50">
-      <div
-        className="absolute inset-0 bg-black/70"
-        onClick={closeCart}
-      />
+    <>
+      <div className="fixed inset-0 z-40 bg-black/30" onClick={closeCart} />
 
-      <aside className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-white shadow-xl">
+      <aside className="fixed top-0 right-0 z-50 flex h-full w-full max-w-md flex-col bg-white shadow-xl">
         <div className="flex items-center justify-between border-b p-5">
           <h2 className="text-xl font-bold">Your Cart</h2>
 
           <button
             type="button"
             onClick={closeCart}
-            className="text-2xl"
+            className="cursor-pointer text-2xl"
+            aria-label="Close cart"
           >
             ×
           </button>
@@ -38,24 +35,37 @@ export default function CartDrawer() {
           ) : (
             <div className="flex flex-col gap-4">
               {items.map((item) => (
-                <div
-                  key={item.product.id}
-                  className="flex gap-4 border-b pb-4"
-                >
-                  <div className="flex-1">
-                    <h3 className="font-semibold">
-                      {item.product.name}
-                    </h3>
+                <div key={item.variant.key} className="flex gap-4 border-b pb-4">
+                  <div className="h-20 w-20 shrink-0 overflow-hidden rounded-md border">
+                    <img
+                      src={item.variant.images?.[0]?.url || '/placeholder.webp'}
+                      alt={item.product.name}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
 
-                    <p className="text-sm text-gray-500">
-                      {item.product.variants.price} × {item.quantity}
+                  <div className="flex flex-1 flex-col">
+                    <h3 className="font-semibold">{item.product.name}</h3>
+
+                    {item.variant.attributes?.Color && (
+                      <p className="text-sm text-gray-500">
+                        Color: {item.variant.attributes.Color}
+                      </p>
+                    )}
+
+                    <p className="mt-1 text-sm text-gray-500">
+                      ${item.variant.price} × {item.quantity}
+                    </p>
+
+                    <p className="mt-auto font-semibold">
+                      ${(Number(item.variant.price) * item.quantity).toFixed(2)}
                     </p>
                   </div>
 
                   <button
                     type="button"
-                    onClick={() => removeFromCart(item.product.id)}
-                    className="text-sm text-red-500"
+                    onClick={() => removeFromCart(item.variant.key!)}
+                    className="cursor-pointer self-start text-sm text-red-500 hover:text-red-700"
                   >
                     Remove
                   </button>
@@ -67,17 +77,20 @@ export default function CartDrawer() {
 
         {items.length > 0 && (
           <div className="border-t p-5">
-            <div className="mb-4 flex justify-between font-bold">
+            <div className="mb-4 flex justify-between text-lg font-bold">
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
             </div>
 
-            <button className="w-full rounded-md bg-black py-3 text-white">
+            <button
+              type="button"
+              className="w-full rounded-md bg-black py-3 font-semibold text-white hover:opacity-90"
+            >
               Checkout
             </button>
           </div>
         )}
       </aside>
-    </div>
+    </>
   );
 }

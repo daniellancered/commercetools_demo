@@ -1,21 +1,24 @@
 'use client';
 
 import { useCart } from '@/context/CartContext';
-import { Product } from '@/types/global';
+import { Product, ProductVariant } from '@/types/global';
 
-export default function AddToCartButton({ product }: { product: Product }) {
+interface AddToCartButtonProps {
+  product: Product;
+  variant: ProductVariant;
+}
+
+export default function AddToCartButton({ product, variant }: AddToCartButtonProps) {
   const { addToCart } = useCart();
-
-  const isInStock = product.variants.availability.isOnStock;
 
   return (
     <button
       type="button"
-      disabled={!isInStock}
-      onClick={() => addToCart(product)}
-      className="bg-primary disabled:text-secondary/40 disabled:bg-accent-3 w-full cursor-pointer rounded-md px-4 py-1.5 font-bold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed"
+      disabled={!variant.availability.isOnStock}
+      onClick={() => addToCart(product, variant)}
+      className="bg-primary w-full cursor-pointer rounded-md px-6 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50"
     >
-      {isInStock ? 'Add to cart' : 'SOLD OUT'}
+      {variant.availability.isOnStock ? 'Add to cart' : 'Out of stock'}
     </button>
   );
 }

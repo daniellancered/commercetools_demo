@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import { useCart } from '@/context/CartContext';
 
 export default function CartDrawer() {
@@ -15,7 +17,7 @@ export default function CartDrawer() {
     <>
       <div className="fixed inset-0 z-40 bg-black/30" onClick={closeCart} />
 
-      <aside className="fixed top-0 right-0 z-50 flex h-full w-full max-w-md flex-col bg-white shadow-xl">
+      <div className="fixed top-0 right-0 z-50 flex h-full w-full max-w-md flex-col bg-white shadow-xl">
         <div className="flex items-center justify-between border-b p-5">
           <h2 className="text-xl font-bold">Your Cart</h2>
 
@@ -76,21 +78,26 @@ export default function CartDrawer() {
         </div>
 
         {items.length > 0 && (
-          <div className="border-t p-5">
-            <div className="mb-4 flex justify-between text-lg font-bold">
+          <div className="flex flex-col gap-3 border-t p-5">
+            <div className="flex justify-between text-lg font-bold">
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
             </div>
 
+            <Link href="/cart" onClick={closeCart}>
+              <div className="bg-tertiary flex w-full justify-center rounded-md py-3 font-semibold text-white hover:opacity-90">
+                View Cart
+              </div>
+            </Link>
             <button
               type="button"
-              className="w-full rounded-md bg-black py-3 font-semibold text-white hover:opacity-90"
+              className="w-full cursor-pointer rounded-md bg-black py-3 font-semibold text-white hover:opacity-90"
             >
               Checkout
             </button>
           </div>
         )}
-      </aside>
+      </div>
     </>
   );
 }

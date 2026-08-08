@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import AddToCartButton from '@/components/cart/AddToCart';
+import ProductGallery from '@/components/products/ProductGallery';
 import { getProduct } from '@/lib/commercetools/products';
 
 type ProductPageProps = {
@@ -19,14 +19,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     return (
       <div className="mx-auto max-w-7xl px-6 py-10">
         <div className="grid gap-10 md:grid-cols-2">
-          <div className="relative aspect-square overflow-hidden rounded-xl border">
-            <Image
-              src={product.variants.images?.[0]?.url || '/placeholder.webp'}
-              alt={product.name}
-              fill
-              className="object-contain p-8"
-            />
-          </div>
+          <ProductGallery images={product.variants.images} productName={product.name} />
 
           <div className="flex flex-col">
             <div className="mb-3 flex flex-wrap gap-2">

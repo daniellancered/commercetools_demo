@@ -1,6 +1,7 @@
-import { mapProducts } from '@/utils/mapProducts';
-import { httpApiRoot } from './BuildClient';
 import { Product } from '@/types/global';
+import { mapProducts } from '@/utils/mapProducts';
+
+import { httpApiRoot } from './BuildClient';
 
 export async function getProducts(): Promise<Product[]> {
   const response = await httpApiRoot
@@ -9,7 +10,7 @@ export async function getProducts(): Promise<Product[]> {
       queryArgs: {
         limit: 20,
         staged: false,
-        expand: ['masterData.current.categories[*]','productType'],
+        expand: ['masterData.current.categories[*]'],
       },
     })
     .execute();
@@ -24,7 +25,7 @@ export async function getProduct(key: string): Promise<Product> {
     .get({
       queryArgs: {
         staged: false,
-        expand: ['masterData.current.categories[*]'],
+        expand: ['masterData.current.categories[*]', 'productType'],
       },
     })
     .execute();

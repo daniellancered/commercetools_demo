@@ -6,6 +6,8 @@ export type Product = {
   slug: string;
   categories?: ProductCategory[];
   variants: ProductVariant;
+  productType?: ProductType;
+  attributes?: ProductAttributes;
 };
 
 export type ProductVariant = {
@@ -31,6 +33,14 @@ export type ProductCategory = {
   key: string;
   name: string;
   slug: string;
+};
+
+export type ProductType = {
+  name: string;
+}
+
+export type ProductAttributes = {
+  [key: string]: string;
 };
 
 export type CartItem = {

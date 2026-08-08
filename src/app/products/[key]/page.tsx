@@ -17,7 +17,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     const product = await getProduct(key);
 
     return (
-      <main className="mx-auto max-w-7xl px-6 py-10">
+      <div className="mx-auto max-w-7xl px-6 py-10">
         <div className="grid gap-10 md:grid-cols-2">
           <div className="relative aspect-square overflow-hidden rounded-xl border">
             <Image
@@ -64,10 +64,22 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
 
-        <section className="mt-16 border-t pt-10">
+        <div className="mt-16 pt-10">
           <h2 className="text-secondary text-2xl font-bold">Product Details</h2>
-        </section>
-      </main>
+          {product.attributes && (
+            <table className="mt-8 w-full border-collapse">
+              <tbody>
+                {Object.entries(product.attributes).map(([name, value]) => (
+                  <tr key={name} className="border-b">
+                    <th className="w-1/3 py-3 pr-4 text-left font-semibold">{name}</th>
+                    <td className="py-3">{value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </div>
     );
   } catch {
     notFound();

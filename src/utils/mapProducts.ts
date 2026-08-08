@@ -2,6 +2,8 @@ import type { Product as CtpProduct } from '@commercetools/platform-sdk';
 
 import type { Product } from '@/types/global';
 
+import { mapAttributes } from './mapAttributes';
+
 const LOCALE = 'en-US';
 
 export function mapProducts(products: CtpProduct[]): Product[] {
@@ -40,6 +42,14 @@ export function mapProducts(products: CtpProduct[]): Product[] {
           availableQuantity: masterVariant!.availability!.availableQuantity ?? 0,
         },
       },
+      ...(product.productType.obj && {
+        productType: {
+          name: product.productType.obj.name,
+        },
+      }),
+      ...(masterVariant.attributes?.length && {
+        attributes: mapAttributes(masterVariant.attributes, LOCALE),
+      }),
     };
   });
 }

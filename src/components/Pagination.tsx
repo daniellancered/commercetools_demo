@@ -25,7 +25,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
         }`}
       >
         <span className="-mt-1 text-2xl">‹</span>
-        <span className="hidden pr-2 sm:inline">Previous</span>
+        <span className="hidden pr-2 inline">Previous</span>
       </Link>
 
       <div className="hidden items-center gap-2 sm:flex">
@@ -72,7 +72,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
           currentPage === totalPages ? 'pointer-events-none opacity-40' : 'hover:text-primary'
         }`}
       >
-        <span className="hidden pl-2 sm:inline">Next</span>
+        <span className="hidden pl-2 inline">Next</span>
         <span className="-mt-1 text-2xl leading-none">›</span>
       </Link>
     </div>

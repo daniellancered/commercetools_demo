@@ -3,21 +3,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useCart } from '@/context/CartContext';
+import AddToCartButton from '@/components/cart/AddToCart';
 import { Product } from '@/types/global';
 
 export default function ProductCard({ product }: { product: Product }) {
-  const { addToCart } = useCart();
-
   const thumbnail = product.variants.images?.[0]?.url || '/placeholder.webp';
 
-  function handleAddToCart(e: React.MouseEvent<HTMLButtonElement>) {
-    e.stopPropagation();
-    addToCart(product);
-  }
-
   return (
-     <div className="group border-accent-3 relative flex h-full flex-col overflow-hidden rounded-xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <div className="group border-accent-3 relative flex h-full flex-col overflow-hidden rounded-xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       <Link
         href={`/products/${product.key}`}
         className="flex flex-1 cursor-pointer flex-col gap-4 p-5"
@@ -31,13 +24,9 @@ export default function ProductCard({ product }: { product: Product }) {
             sizes="(max-width: 768px) 100vw, 25vw"
           />
 
-          {product.variants.availability.isOnStock ? (
+          {product.variants.availability.isOnStock && (
             <div className="bg-primary/90 absolute z-10 rounded-full px-3 py-1 text-xs font-semibold text-white shadow-sm">
               In Stock
-            </div>
-          ) : (
-            <div className="absolute z-10 rounded-full bg-red-500/90 px-3 py-1 text-xs font-semibold text-white shadow-sm">
-              Out of Stock
             </div>
           )}
         </div>
@@ -65,13 +54,9 @@ export default function ProductCard({ product }: { product: Product }) {
           <span className="text-secondary h-full text-xl font-bold">{product.variants.price}</span>
         </Link>
 
-        <button
-          type="button"
-          onClick={handleAddToCart}
-          className="border-primary text-primary hover:bg-primary cursor-pointer rounded-md mr-5 border-2 bg-white px-4 py-1.5 text-sm font-bold transition-colors hover:text-white"
-        >
-          Add to cart
-        </button>
+        <div className="mr-5">
+          <AddToCartButton product={product} />
+        </div>
       </div>
     </div>
   );

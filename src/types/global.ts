@@ -57,4 +57,7 @@ export type CartContextType = {
   removeFromCart: (variantKey: string) => void;
   closeCart: () => void;
   openCart: () => void;
+  increaseQuantity: (variantKey: string) => void;
+  decreaseQuantity: (variantKey: string) => void;
+  updateQuantity: (variantKey: string, quantity: number) => void;
 };

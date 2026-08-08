@@ -37,6 +37,35 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setItems((current) => current.filter((item) => item.variant.key !== variantKey));
   }
 
+  const increaseQuantity = (variantKey: string) => {
+    setItems((items) =>
+      items.map((item) =>
+        item.variant.key === variantKey ? { ...item, quantity: item.quantity + 1 } : item,
+      ),
+    );
+  };
+
+  const decreaseQuantity = (variantKey: string) => {
+    setItems((items) =>
+      items
+        .map((item) =>
+          item.variant.key === variantKey ? { ...item, quantity: item.quantity - 1 } : item,
+        )
+        .filter((item) => item.quantity > 0),
+    );
+  };
+
+  const updateQuantity = (variantKey: string, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromCart(variantKey);
+      return;
+    }
+
+    setItems((items) =>
+      items.map((item) => (item.variant.key === variantKey ? { ...item, quantity } : item)),
+    );
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -46,6 +75,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
         removeFromCart,
         closeCart: () => setIsOpen(false),
         openCart: () => setIsOpen(true),
+        increaseQuantity,
+        decreaseQuantity,
+        updateQuantity,
       }}
     >
       {children}

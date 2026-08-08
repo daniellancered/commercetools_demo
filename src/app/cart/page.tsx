@@ -7,7 +7,15 @@ import Cart from '@/components/cart/Cart';
 import { useCart } from '@/context/CartContext';
 
 export default function CartPage() {
-  const { items, removeFromCart } = useCart();
+  const { items, removeFromCart, updateQuantity, increaseQuantity, decreaseQuantity } = useCart();
 
-  return <Cart items={items} removeFromCart={removeFromCart} />;
+  return (
+    <Cart
+      items={items}
+      removeFromCart={removeFromCart}
+      increaseQuantity={increaseQuantity}
+      decreaseQuantity={decreaseQuantity}
+      updateQuantity={updateQuantity}
+    />
+  );
 }

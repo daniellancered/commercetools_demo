@@ -3,19 +3,23 @@ import { mapProducts } from '@/utils/mapProducts';
 
 import { httpApiRoot } from './BuildClient';
 
-export async function getProducts(): Promise<Product[]> {
+export async function getProducts(page = 1, limit = 8) {
   const response = await httpApiRoot
     .products()
     .get({
       queryArgs: {
-        limit: 20,
+        limit,
+        offset: (page - 1) * limit,
         staged: false,
         expand: ['masterData.current.categories[*]'],
       },
     })
     .execute();
 
-  return mapProducts(response.body.results);
+  return {
+    products: mapProducts(response.body.results),
+    total: response.body.total ?? 0,
+  };
 }
 
 export async function getProduct(key: string): Promise<Product> {

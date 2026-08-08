@@ -1,15 +1,22 @@
+import Pagination from '@/components/Pagination';
 import ProductList from '@/components/products/ProductList';
 import { getProducts } from '@/lib/commercetools/products';
-import { Product } from '@/types/global';
 
-export default async function ProductsPage() {
-  let products: Product[] = [];
+interface ProductsPageProps {
+  searchParams: Promise<{ page?: string }>;
+}
 
-  try {
-    products = await getProducts();
-  } catch (error) {
-    console.error(error);
-  }
+export default async function ProductsPage({ searchParams }: ProductsPageProps) {
+  const { page = '1' } = await searchParams;
+  const count = 8;
+  const currentPage = Math.max(1, Number(page) || 1);
+  const { products, total } = await getProducts(currentPage, count);
+  const totalPages = Math.ceil(total / count);
 
-  return <ProductList products={products} />;
+  return (
+    <>
+      <ProductList products={products} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
+    </>
+  );
 }

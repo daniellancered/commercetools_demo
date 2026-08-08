@@ -13,7 +13,7 @@ export default function ProductCard({ product }: { product: Product }) {
     <div className="group border-accent-3 relative flex h-full flex-col overflow-hidden rounded-xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       <Link
         href={`/products/${product.key}`}
-        className="flex flex-1 cursor-pointer flex-col gap-4 p-5"
+        className="flex flex-1 cursor-pointer flex-col gap-4 p-6"
       >
         <div className="relative aspect-square w-full overflow-hidden">
           <Image
@@ -50,13 +50,13 @@ export default function ProductCard({ product }: { product: Product }) {
       </Link>
 
       <div className="mt-auto flex items-center justify-between">
-        <Link href={`/products/${product.key}`} className="w-full flex-1 p-5">
-          <span className="text-secondary h-full text-xl font-bold">
+        <Link href={`/products/${product.key}`} className="w-full flex-1 px-6 pb-6">
+          <span className="text-secondary h-full text-[1.5rem] font-bold">
             ${product.mainVariant.price}
           </span>
         </Link>
 
-        <div className="mr-5">
+        <div className="mr-5 mb-6">
           <AddToCartButton product={product} variant={product.mainVariant} />
         </div>
       </div>

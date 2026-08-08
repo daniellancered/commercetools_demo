@@ -32,3 +32,17 @@ export type ProductCategory = {
   name: string;
   slug: string;
 };
+
+export type CartItem = {
+  product: Product;
+  quantity: number;
+};
+
+export type CartContextType = {
+  items: CartItem[];
+  isOpen: boolean;
+  addToCart: (product: Product) => void;
+  removeFromCart: (productId: string) => void;
+  closeCart: () => void;
+  openCart: () => void;
+};

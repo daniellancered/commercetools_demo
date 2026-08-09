@@ -10,10 +10,15 @@ export default function Header() {
   const { openCart } = useCart();
 
   const isCartPage = pathname === '/cart';
+  const isHome = pathname === '/';
 
   return (
-    <header className="border-accent-2 bg-background/90 sticky top-0 z-50 w-full border-b backdrop-blur-md">
-      <div className="container flex h-16 items-center justify-between">
+    <header
+      className={`sticky top-0 z-50 w-full border-b backdrop-blur-md ${
+        isHome ? 'border-white text-white' : 'border-accent-3 text-secondary'
+      }`}
+    >
+      <div className="flex h-20 items-center justify-between">
         <Link href="/" className="font-bold">
           Commercetools Demo
         </Link>
@@ -32,7 +37,7 @@ export default function Header() {
           <button
             type="button"
             onClick={!isCartPage ? openCart : () => {}}
-            className="bg-primary hover:bg-primary-600 shadow-primary/20 cursor-pointer rounded-md px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors"
+            className="bg-tertiary hover:bg-primary shadow-primary/20 cursor-pointer rounded-md px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors"
           >
             Cart
           </button>

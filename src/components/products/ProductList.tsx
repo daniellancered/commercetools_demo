@@ -5,17 +5,25 @@ import { Product } from '@/types/global';
 
 interface ProductListProps {
   products: Product[];
+  category: string;
 }
 
-export default function ProductList({ products }: ProductListProps) {
+export default function ProductList({ products, category }: ProductListProps) {
+  const formattedCategory = category
+    ? category
+        .split('-')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+    : 'Our Products';
+
   return (
     <Container>
       <PageHeader
-        title="Products"
+        title={formattedCategory ?? 'Our Products'}
         description="Discover our hand-picked selection of high-quality furnitures and home decor, designed to bring warmth and texture to any space."
       />
       {products.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-x-6 lg:gap-y-10 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-10 xl:grid-cols-4">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

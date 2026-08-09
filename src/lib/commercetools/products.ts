@@ -1,23 +1,36 @@
 import { Product } from '@/types/global';
+import { mapProductProjections } from '@/utils/mapProductProjection';
 import { mapProducts } from '@/utils/mapProducts';
 
 import { httpApiRoot } from './BuildClient';
+import { getCategory } from './categories';
 
-export async function getProducts(page = 1, limit = 8) {
+export async function getProducts(page = 1, limit = 8, categoryKey?: string) {
+  let categoryId: string | undefined;
+
+  if (categoryKey) {
+    const category = await getCategory(categoryKey);
+    categoryId = category.id;
+  }
+
   const response = await httpApiRoot
-    .products()
+    .productProjections()
+    .search()
     .get({
       queryArgs: {
         limit,
         offset: (page - 1) * limit,
         staged: false,
-        expand: ['masterData.current.categories[*]'],
+        ...(categoryId && {
+          filter: [`categories.id:"${categoryId}"`],
+        }),
+        expand: ['categories[*]'],
       },
     })
     .execute();
 
   return {
-    products: mapProducts(response.body.results),
+    products: mapProductProjections(response.body.results),
     total: response.body.total ?? 0,
   };
 }

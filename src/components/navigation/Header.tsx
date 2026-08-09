@@ -29,8 +29,8 @@ export default function Header() {
               Products
             </Link>
 
-            <Link href="/collections" className="hover:text-primary transition-colors">
-              Collections
+            <Link href="/categories" className="hover:text-primary transition-colors">
+              Categories
             </Link>
           </nav>
 

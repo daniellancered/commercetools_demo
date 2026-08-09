@@ -1,8 +1,8 @@
 import type { Product as CtpProduct } from '@commercetools/platform-sdk';
 
 import type { Product } from '@/types/global';
-
-import { mapVariant } from './mapVariant';
+import { mapCategories } from '@/utils/mapCategories';
+import { mapVariant } from '@/utils/mapVariant';
 
 const LOCALE = 'en-US';
 
@@ -17,14 +17,9 @@ export function mapProducts(products: CtpProduct[]): Product[] {
       name: current.name[LOCALE],
       description: current.description?.[LOCALE],
       slug: current.slug[LOCALE],
-      categories: current.categories
-        ?.filter((category) => category.obj)
-        .map((category) => ({
-          id: category.obj!.id,
-          key: category.obj!.key ?? '',
-          name: category.obj!.name[LOCALE],
-          slug: category.obj!.slug[LOCALE],
-        })),
+      categories: mapCategories(
+        current.categories.filter((category) => category.obj).map((category) => category.obj!),
+      ),
       mainVariant: mapVariant(masterVariant, LOCALE),
       ...(current.variants.length && {
         variants: current.variants.map((variant) => mapVariant(variant, LOCALE, masterVariant)),

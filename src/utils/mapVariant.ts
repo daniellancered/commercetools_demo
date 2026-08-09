@@ -1,11 +1,13 @@
-import type { ProductVariant as CtpProductVariant } from '@commercetools/platform-sdk';
+import type {
+  ProductVariant as CtpProductVariant,
+  ProductProjection,
+} from '@commercetools/platform-sdk';
 
 import type { ProductVariant } from '@/types/global';
-
-import { mapAttributes } from './mapAttributes';
+import { mapAttributes } from '@/utils/mapAttributes';
 
 export function mapVariant(
-  variant: CtpProductVariant,
+  variant: ProductProjection['masterVariant'],
   locale: string,
   fallbackVariant?: CtpProductVariant,
 ): ProductVariant {

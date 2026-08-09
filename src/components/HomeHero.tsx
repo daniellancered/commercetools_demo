@@ -8,7 +8,9 @@ export default function HomeHero() {
     <>
       <Container>
         <div className="relative z-10 flex flex-col items-start gap-8 pt-32">
-          <span className="text-sm font-semibold text-accent-1/60 uppercase">Elevate your home</span>
+          <span className="text-accent-1/60 text-sm font-semibold uppercase">
+            Elevate your home
+          </span>
 
           <h1 className="text-5xl leading-tight font-bold tracking-tight text-white md:text-6xl">
             Make your space
@@ -23,16 +25,16 @@ export default function HomeHero() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/products"
-              className="bg-accent-3 rounded-md border-1 px-7 py-3.5 font-semibold text-black shadow-sm transition-colors hover:bg-black hover:text-white hover:border-black"
+              className="bg-accent-3 rounded-md border-1 px-7 py-3.5 font-semibold text-black shadow-sm transition-colors hover:border-black hover:bg-black hover:text-white"
             >
-              Shop Collection
+              Shop Now
             </Link>
 
             <Link
-              href="/collections"
+              href="/categories"
               className="rounded-md border-1 border-white px-7 py-3.5 font-semibold text-white transition-colors hover:bg-white hover:text-black"
             >
-              Explore Collections
+              Explore Categories
             </Link>
           </div>
         </div>

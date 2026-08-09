@@ -19,11 +19,11 @@ export default function AddToCartButton({ product, variant, type }: AddToCartBut
       type="button"
       disabled={!variant.availability.isOnStock}
       onClick={() => addToCart(product, variant)}
-      className="bg-primary w-full cursor-pointer rounded-md px-6 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50"
+      className="bg-primary hover:bg-accent-1 w-full cursor-pointer rounded-md p-3 font-bold text-white transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {variant.availability.isOnStock ? (
         type === 'full' ? (
-          <div className='flex gap-4 justify-center'>
+          <div className="flex justify-center gap-4">
             <ShoppingCart className="h-6 w-6" />
             Add to cart
           </div>

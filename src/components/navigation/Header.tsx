@@ -18,13 +18,13 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 flex w-screen justify-center backdrop-blur-xl ${
+      className={`fixed top-0 right-0 left-0 z-50 flex justify-center backdrop-blur-xl ${
         isHome ? 'text-white' : 'border-accent-3 text-secondary border-b'
       }`}
     >
       <Container>
         <div className="flex h-20 items-center justify-between">
-          <Link href="/" className="transition-color text-3xl font-bold duration-300">
+          <Link href="/" className="text-3xl font-bold">
             Commercetools Demo
           </Link>
 
@@ -47,7 +47,7 @@ export default function Header() {
 
             <button
               type="button"
-              onClick={!isCartPage ? openCart : () => {}}
+              onClick={!isCartPage ? openCart : undefined}
               className="relative cursor-pointer"
               aria-label={`Shopping cart with ${itemCount} items`}
             >

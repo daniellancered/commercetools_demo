@@ -52,13 +52,13 @@ export default function CartDrawer() {
             className="cursor-pointer text-2xl"
             aria-label="Close cart"
           >
-            ×
+            x
           </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-5">
           {items.length === 0 ? (
-            <div className="flex w-full flex-col items-center justify-center gap-4 py-100">
+            <div className="flex w-full flex-col items-center justify-center gap-4 py-60">
               <ShoppingCart className="h-6 w-6" />
 
               <p>Your cart is empty.</p>
@@ -91,7 +91,7 @@ export default function CartDrawer() {
                         onClick={() => decreaseQuantity(item.variant.key!)}
                         className="border-accent-3 flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border hover:bg-gray-100"
                       >
-                        −
+                        -
                       </button>
 
                       <input

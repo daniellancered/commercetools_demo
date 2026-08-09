@@ -44,87 +44,97 @@ export default function Cart({
 
   return (
     <Container>
-      <div className="flex flex-col justify-center">
-        <div className="mx-auto flex flex-col justify-center lg:w-[70vw]">
-          <PageHeader title="Your Cart" />
+      <PageHeader title="Your Cart" />
+      {items.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20">
+          <p>Your cart is empty.</p>
+          <Link
+            href="/products"
+            className="bg-primary mt-8 rounded-md px-6 py-3 font-semibold text-white"
+          >
+            Continue Shopping
+          </Link>
+        </div>
+      ) : (
+        <div className="grid gap-10 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <div className="flex flex-col">
+              {items.map((item) => (
+                <div key={item.variant.key} className="border-accent-3 flex gap-5 border-b py-6">
+                  <div className="border-accent-3 relative h-24 w-24 shrink-0 overflow-hidden rounded-lg border">
+                    <Image
+                      src={item.variant.images?.[0]?.url || '/placeholder.webp'}
+                      alt={item.product.name}
+                      fill
+                      className="object-contain p-2"
+                    />
+                  </div>
 
-          <div className="grid gap-10 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-              <div className="flex flex-col">
-                {items.map((item) => (
-                  <div key={item.variant.key} className="border-accent-3 flex gap-5 border-b py-6">
-                    <div className="border-accent-3 relative h-24 w-24 shrink-0 overflow-hidden rounded-lg border">
-                      <Image
-                        src={item.variant.images?.[0]?.url || '/placeholder.webp'}
-                        alt={item.product.name}
-                        fill
-                        className="object-contain p-2"
-                      />
-                    </div>
+                  <div className="flex flex-1 flex-col gap-1">
+                    <Link
+                      href={`/products/${item.product.key}`}
+                      className="cursor-pointer text-lg font-semibold hover:underline"
+                    >
+                      {item.product.name}
+                    </Link>
 
-                    <div className="flex flex-1 flex-col gap-1">
-                      <Link
-                        href={`/products/${item.product.key}`}
-                        className="cursor-pointer text-lg font-semibold hover:underline"
-                      >
-                        {item.product.name}
-                      </Link>
-
-                      <p className="text-lg">${item.variant.price}</p>
-                      <div className="flex items-center gap-1">
-                        <button
-                          type="button"
-                          onClick={() => decreaseQuantity(item.variant.key!)}
-                          className="border-accent-3 flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border hover:bg-gray-100"
-                        >
-                          −
-                        </button>
-
-                        <input
-                          type="number"
-                          min="1"
-                          value={item.quantity}
-                          onChange={(e) => {
-                            const quantity = Number(e.target.value);
-
-                            if (quantity >= 1) {
-                              updateQuantity(item.variant.key!, quantity);
-                            }
-                          }}
-                          className="border-accent-3 h-7 w-12 rounded-md border text-center text-sm"
-                        />
-
-                        <button
-                          type="button"
-                          onClick={() => increaseQuantity(item.variant.key!)}
-                          className="border-accent-3 flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border hover:bg-gray-100"
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col justify-center">
+                    <p className="text-lg">${item.variant.price}</p>
+                    <div className="flex items-center gap-1">
                       <button
                         type="button"
-                        onClick={() => removeFromCart(item.variant.key!)}
-                        className="cursor-pointer rounded-md border border-red-500 p-1 text-sm text-red-500 hover:text-red-700"
+                        onClick={() => decreaseQuantity(item.variant.key!)}
+                        className="border-accent-3 flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border hover:bg-gray-100"
                       >
-                        Remove
+                        -
+                      </button>
+
+                      <input
+                        type="number"
+                        min="1"
+                        value={item.quantity}
+                        onChange={(e) => {
+                          const quantity = Number(e.target.value);
+
+                          if (quantity >= 1) {
+                            updateQuantity(item.variant.key!, quantity);
+                          }
+                        }}
+                        className="border-accent-3 h-7 w-12 rounded-md border text-center text-sm"
+                      />
+
+                      <button
+                        type="button"
+                        onClick={() => increaseQuantity(item.variant.key!)}
+                        className="border-accent-3 flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border hover:bg-gray-100"
+                      >
+                        +
                       </button>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
 
-            <div className="border-accent-3 flex h-full flex-grow flex-col justify-between gap-4 rounded-xl border p-6">
+                  <div className="flex flex-col justify-center">
+                    <button
+                      type="button"
+                      onClick={() => removeFromCart(item.variant.key!)}
+                      className="cursor-pointer rounded-md border border-red-500 p-1 text-sm text-red-500 hover:text-red-700"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-1">
+            <div className="border-accent-3 rounded-xl border p-6">
               <div className="flex flex-col gap-2">
                 <h2 className="text-xl font-bold">Order Summary</h2>
-                <div>
+
+                <div className="flex flex-col gap-2">
                   {items.map((item) => (
                     <div
-                      key={item.product.id}
+                      key={item.variant.key}
                       className="grid grid-cols-[2fr_auto_1fr] gap-3 text-sm"
                     >
                       <span className="min-w-0">{item.product.name}</span>
@@ -135,24 +145,27 @@ export default function Cart({
                     </div>
                   ))}
                 </div>
+
                 <div className="flex justify-between text-sm">
-                  <span>Items: </span>
+                  <span>Items:</span>
                   <span>{items.reduce((sum, item) => sum + item.quantity, 0)}</span>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="mt-4 flex flex-col gap-2">
                 <div className="flex justify-between border-t py-4 text-lg font-bold">
-                  <span>Shipping Fee: </span>
+                  <span>Shipping Fee:</span>
                   <span>FREE</span>
                 </div>
-                <div className="flex justify-between border-t py-4 pb-10 text-lg font-bold">
+
+                <div className="flex justify-between border-t py-4 text-lg font-bold">
                   <span>Total</span>
                   <span>${total.toFixed(2)}</span>
                 </div>
+
                 <button
                   type="button"
-                  className="bg-primary flex w-full cursor-pointer justify-center gap-3 rounded-md py-3 font-semibold text-white transition-colors duration-300 hover:bg-accent-1"
+                  className="bg-primary hover:bg-accent-1 flex w-full cursor-pointer justify-center gap-3 rounded-md py-3 font-semibold text-white transition-colors duration-300"
                 >
                   <CreditCard className="h-6 w-6" />
                   Checkout
@@ -168,7 +181,7 @@ export default function Cart({
             </div>
           </div>
         </div>
-      </div>
+      )}
     </Container>
   );
 }

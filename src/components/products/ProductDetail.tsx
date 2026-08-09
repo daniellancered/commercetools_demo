@@ -14,7 +14,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   return (
     <Container>
-      <div className="mx-auto max-w-6xl px-6 py-10">
+      <div className="mx-auto max-w-6xl mt-20 px-6 py-10">
         <div className="grid gap-10 md:grid-cols-2">
           <ProductGallery images={selectedVariant.images} productName={product.name} />
 

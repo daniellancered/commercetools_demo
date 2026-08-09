@@ -5,7 +5,7 @@ import { Product } from '@/types/global';
 
 interface ProductListProps {
   products: Product[];
-  category: string;
+  category?: string;
 }
 
 export default function ProductList({ products, category }: ProductListProps) {

@@ -49,13 +49,13 @@ export default function Header() {
             <button
               type="button"
               onClick={!isCartPage ? openCart : undefined}
-              className="relative cursor-pointer"
+              className="hover:bg-accent-1 relative cursor-pointer rounded-lg p-3 transition-colors hover:text-white"
               aria-label={`Shopping cart with ${itemCount} items`}
             >
               <ShoppingCart className="h-6 w-6" />
 
               {itemCount > 0 && (
-                <span className="bg-primary absolute top-1 -right-3 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-xs font-bold text-white">
+                <span className="bg-primary absolute top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-xs font-bold text-white">
                   {itemCount}
                 </span>
               )}

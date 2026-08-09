@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Store } from 'lucide-react';
 
 import Container from '@/components/Container';
 import { useCart } from '@/context/CartContext';
@@ -24,12 +24,13 @@ export default function Header() {
     >
       <Container>
         <div className="flex h-20 items-center justify-between">
-          <Link href="/" className="text-3xl font-bold">
-            Commercetools Demo
+          <Link href="/" className="flex items-center gap-2 font-bold sm:text-xl md:text-3xl">
+            <Store className="h-8 w-8" />
+            <span className="hidden sm:inline">Commercetools Demo</span>
           </Link>
 
           <div className="flex gap-8">
-            <nav className="text-secondary-600 hidden items-center gap-8 text-lg font-medium md:flex">
+            <nav className="text-secondary-600 flex items-center text-lg font-medium sm:gap-6">
               <Link
                 href="/products"
                 className="hover:text-primary hover:bg-accent-1 rounded-lg p-3 transition-colors hover:text-white"

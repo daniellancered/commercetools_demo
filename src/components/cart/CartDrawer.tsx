@@ -83,7 +83,12 @@ export default function CartDrawer() {
                   </div>
 
                   <div className="flex flex-1 flex-col gap-1.5">
-                    <h3 className="text-sm font-semibold">{item.product.name}</h3>
+                    <Link
+                      href={`/products/${item.product.key ?? item.product.slug}`}
+                      onClick={closeCart}
+                    >
+                      <h3 className="text-sm font-semibold hover:underline">{item.product.name}</h3>
+                    </Link>
 
                     <div className="flex items-center gap-1">
                       <button

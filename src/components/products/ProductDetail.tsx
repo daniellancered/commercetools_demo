@@ -14,7 +14,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   return (
     <Container>
-      <div className="mx-auto max-w-6xl mt-20 px-6 py-10">
+      <div className="mx-auto mt-20 max-w-6xl px-6 py-10">
         <div className="grid gap-10 md:grid-cols-2">
           <ProductGallery images={selectedVariant.images} productName={product.name} />
 
@@ -47,8 +47,8 @@ export default function ProductDetail({ product }: { product: Product }) {
                         onClick={() => setSelectedVariant(variant)}
                         className={`rounded-md border px-4 py-2 ${
                           selectedVariant.sku === variant.sku
-                            ? 'border-primary bg-primary text-white'
-                            : 'border-gray-300'
+                            ? 'border-accent-2 bg-primary/60 text-white'
+                            : 'border-gray cursor-pointer'
                         }`}
                       >
                         {variant.sku}
@@ -59,7 +59,7 @@ export default function ProductDetail({ product }: { product: Product }) {
               </div>
             )}
 
-            <AddToCartButton product={product} variant={selectedVariant} type='full'/>
+            <AddToCartButton product={product} variant={selectedVariant} type="full" />
 
             <div className="mt-10 flex flex-col gap-2">
               <h2 className="text-secondary text-2xl font-bold">Product Details</h2>

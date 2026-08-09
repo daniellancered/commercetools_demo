@@ -25,12 +25,41 @@ export function mapVariant(
       width: image.dimensions.w,
       height: image.dimensions.h,
     })),
-    availability: {
-      isOnStock: variant.availability?.isOnStock ?? false,
-      availableQuantity: variant.availability?.availableQuantity ?? 0,
-    },
+    availability: mapAvailability(variant.availability),
     ...(variant.attributes?.length && {
       attributes: mapAttributes(variant.attributes, locale),
     }),
+  };
+}
+
+function mapAvailability(availability: CtpProductVariant['availability']) {
+  if (!availability) {
+    return {
+      isOnStock: false,
+      availableQuantity: 0,
+    };
+  }
+
+  if ('isOnStock' in availability) {
+    return {
+      isOnStock: availability.isOnStock ?? false,
+      availableQuantity: availability.availableQuantity ?? 0,
+    };
+  }
+
+  if ('channels' in availability && availability.channels) {
+    const channels = Object.values(availability.channels);
+    return {
+      isOnStock: channels.some((channel) => channel.isOnStock),
+      availableQuantity: channels.reduce(
+        (total, channel) => total + (channel.availableQuantity ?? 0),
+        0,
+      ),
+    };
+  }
+
+  return {
+    isOnStock: false,
+    availableQuantity: 0,
   };
 }

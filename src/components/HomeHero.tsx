@@ -10,7 +10,7 @@ export default function HomeHero() {
         <div className="relative z-10 flex flex-col items-start gap-8 pt-48">
           <h1 className="text-5xl leading-tight font-bold tracking-tight text-white md:text-6xl">
             Make your space
-            <span className="block text-white">feel like home.</span>
+            <span className="block text-accent-1">feel like home.</span>
           </h1>
 
           <p className="text-accent-3 max-w-lg text-lg leading-relaxed">

@@ -3,46 +3,65 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { ShoppingCart } from 'lucide-react';
+
+import Container from '@/components/Container';
 import { useCart } from '@/context/CartContext';
 
 export default function Header() {
   const pathname = usePathname();
-  const { openCart } = useCart();
+  const { items, openCart } = useCart();
 
   const isCartPage = pathname === '/cart';
   const isHome = pathname === '/';
+  const itemCount = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full border-b backdrop-blur-md ${
-        isHome ? 'border-white text-white' : 'border-accent-3 text-secondary'
+      className={`sticky top-0 z-50 flex w-screen justify-center backdrop-blur-xl ${
+        isHome ? 'text-white' : 'border-accent-3 text-secondary border-b'
       }`}
     >
-      <div className="flex h-20 items-center justify-between">
-        <Link href="/" className="font-bold">
-          Commercetools Demo
-        </Link>
+      <Container>
+        <div className="flex h-20 items-center justify-between">
+          <Link href="/" className="transition-color text-3xl font-bold duration-300">
+            Commercetools Demo
+          </Link>
 
-        <div className="flex gap-8">
-          <nav className="text-secondary-600 hidden items-center gap-8 text-sm font-medium md:flex">
-            <Link href="/products" className="hover:text-primary transition-colors">
-              Products
-            </Link>
+          <div className="flex gap-8">
+            <nav className="text-secondary-600 hidden items-center gap-8 text-lg font-medium md:flex">
+              <Link
+                href="/products"
+                className="hover:text-primary hover:bg-accent-1 rounded-lg p-3 transition-colors hover:text-white"
+              >
+                Products
+              </Link>
 
-            <Link href="/categories" className="hover:text-primary transition-colors">
-              Categories
-            </Link>
-          </nav>
+              <Link
+                href="/categories"
+                className="hover:text-primary hover:bg-accent-1 rounded-lg p-3 transition-colors hover:text-white"
+              >
+                Categories
+              </Link>
+            </nav>
 
-          <button
-            type="button"
-            onClick={!isCartPage ? openCart : () => {}}
-            className="bg-tertiary hover:bg-primary shadow-primary/20 cursor-pointer rounded-md px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors"
-          >
-            Cart
-          </button>
+            <button
+              type="button"
+              onClick={!isCartPage ? openCart : () => {}}
+              className="relative cursor-pointer"
+              aria-label={`Shopping cart with ${itemCount} items`}
+            >
+              <ShoppingCart className="h-6 w-6" />
+
+              {itemCount > 0 && (
+                <span className="bg-primary absolute top-1 -right-3 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-xs font-bold text-white">
+                  {itemCount}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+      </Container>
     </header>
   );
 }

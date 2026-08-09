@@ -57,7 +57,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </Link>
 
         <div className="mr-5 mb-6">
-          <AddToCartButton product={product} variant={product.mainVariant} />
+          <AddToCartButton product={product} variant={product.mainVariant} type='card'/>
         </div>
       </div>
     </div>

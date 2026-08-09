@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 
+import { CreditCard, ShoppingCart } from 'lucide-react';
+
 import { useCart } from '@/context/CartContext';
 
 export default function CartDrawer() {
@@ -18,6 +20,7 @@ export default function CartDrawer() {
   const total = items.reduce((sum, item) => {
     return sum + Number(item.variant.price) * item.quantity;
   }, 0);
+  const itemCount = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <>
@@ -34,7 +37,14 @@ export default function CartDrawer() {
         }`}
       >
         <div className="border-accent-3 flex items-center justify-between border-b p-5">
-          <h2 className="text-xl font-bold">Your Cart</h2>
+          <h2 className="text-secondary flex items-center gap-2 text-xl font-bold">
+            Your Cart
+            {itemCount > 0 && (
+              <span className="bg-primary flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold text-white">
+                {itemCount}
+              </span>
+            )}
+          </h2>
 
           <button
             type="button"
@@ -48,7 +58,18 @@ export default function CartDrawer() {
 
         <div className="flex-1 overflow-y-auto p-5">
           {items.length === 0 ? (
-            <p>Your cart is empty.</p>
+            <div className="flex w-full flex-col items-center justify-center gap-4 py-100">
+              <ShoppingCart className="h-6 w-6" />
+
+              <p>Your cart is empty.</p>
+              <Link
+                href="/products"
+                onClick={closeCart}
+                className="bg-accent-1 hover:bg-primary w-fit gap-3 rounded-md p-3 font-semibold text-white transition-colors duration-300"
+              >
+                Continue Shopping
+              </Link>
+            </div>
           ) : (
             <div className="flex flex-col gap-4">
               {items.map((item) => (
@@ -62,7 +83,7 @@ export default function CartDrawer() {
                   </div>
 
                   <div className="flex flex-1 flex-col gap-1.5">
-                    <h3 className="font-semibold text-sm">{item.product.name}</h3>
+                    <h3 className="text-sm font-semibold">{item.product.name}</h3>
 
                     <div className="flex items-center gap-1">
                       <button
@@ -124,15 +145,17 @@ export default function CartDrawer() {
             </div>
 
             <Link href="/cart" onClick={closeCart}>
-              <div className="bg-tertiary flex w-full justify-center rounded-md py-3 font-semibold text-white hover:opacity-90">
+              <div className="bg-accent-1 hover:bg-primary flex w-full justify-center gap-3 rounded-md py-3 font-semibold text-white transition-colors duration-300">
+                <ShoppingCart className="h-6 w-6" />
                 View Cart
               </div>
             </Link>
 
             <button
               type="button"
-              className="w-full cursor-pointer rounded-md bg-black py-3 font-semibold text-white hover:opacity-90"
+              className="bg-accent-2 hover:bg-secondary flex w-full cursor-pointer justify-center gap-3 rounded-md py-3 font-semibold text-white transition-colors duration-300"
             >
+              <CreditCard className="h-6 w-6" />
               Checkout
             </button>
           </div>

@@ -7,11 +7,7 @@ export default function HomeHero() {
   return (
     <>
       <Container>
-        <div className="relative z-10 flex flex-col items-start gap-8 pt-32">
-          <span className="text-accent-1/60 text-sm font-semibold uppercase">
-            Elevate your home
-          </span>
-
+        <div className="relative z-10 flex flex-col items-start gap-8 pt-48">
           <h1 className="text-5xl leading-tight font-bold tracking-tight text-white md:text-6xl">
             Make your space
             <span className="block text-white">feel like home.</span>
@@ -25,14 +21,14 @@ export default function HomeHero() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/products"
-              className="bg-accent-3 rounded-md border-1 px-7 py-3.5 font-semibold text-black shadow-sm transition-colors hover:border-black hover:bg-black hover:text-white"
+              className="bg-accent-3 hover:bg-accent-1 rounded-md px-7 py-3.5 font-semibold text-black shadow-sm transition-colors duration-300 hover:text-white"
             >
               Shop Now
             </Link>
 
             <Link
               href="/categories"
-              className="rounded-md border-1 border-white px-7 py-3.5 font-semibold text-white transition-colors hover:bg-white hover:text-black"
+              className="rounded-md border-1 border-white px-7 py-3.5 font-semibold text-white transition-colors duration-300 hover:bg-white hover:text-black"
             >
               Explore Categories
             </Link>

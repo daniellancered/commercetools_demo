@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { CreditCard } from 'lucide-react';
+
 import { CartItem } from '@/types/global';
 
 import Container from '../Container';
@@ -150,8 +152,9 @@ export default function Cart({
                 </div>
                 <button
                   type="button"
-                  className="bg-primary w-full cursor-pointer rounded-md py-3 font-semibold text-white"
+                  className="bg-primary flex w-full cursor-pointer justify-center gap-3 rounded-md py-3 font-semibold text-white transition-colors duration-300 hover:bg-accent-1"
                 >
+                  <CreditCard className="h-6 w-6" />
                   Checkout
                 </button>
 

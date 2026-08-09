@@ -59,7 +59,7 @@ export default function ProductDetail({ product }: { product: Product }) {
               </div>
             )}
 
-            <AddToCartButton product={product} variant={selectedVariant} />
+            <AddToCartButton product={product} variant={selectedVariant} type='full'/>
 
             <div className="mt-10 flex flex-col gap-2">
               <h2 className="text-secondary text-2xl font-bold">Product Details</h2>

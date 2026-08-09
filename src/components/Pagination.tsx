@@ -24,7 +24,7 @@ export default function Pagination({ currentPage, totalPages, category }: Pagina
     `/products?page=${page}${category ? `&category=${category}` : ''}`;
 
   return (
-    <div className="border-accent-3 mt-20 mb-40 flex items-center justify-between rounded-full border bg-white px-6 py-3 shadow-sm">
+    <div className="mb-40 flex items-center justify-between rounded-lg bg-white px-6 py-3 shadow-sm">
       <Link
         href={getPageUrl(Math.max(1, currentPage - 1))}
         className={`flex items-center gap-2 ${
@@ -38,8 +38,8 @@ export default function Pagination({ currentPage, totalPages, category }: Pagina
       <div className="hidden items-center gap-1 sm:flex">
         <Link
           href={getPageUrl(1)}
-          className={`flex h-10 w-10 items-center justify-center rounded-full ${
-            currentPage === 1 ? 'bg-primary text-white' : 'hover:bg-gray-100'
+          className={`flex h-10 w-10 items-center justify-center rounded-lg ${
+            currentPage === 1 ? 'bg-primary text-white' : 'hover:bg-accent-3'
           }`}
         >
           1
@@ -51,8 +51,8 @@ export default function Pagination({ currentPage, totalPages, category }: Pagina
           <Link
             key={page}
             href={getPageUrl(page)}
-            className={`flex h-10 w-10 items-center justify-center rounded-full ${
-              page === currentPage ? 'bg-primary text-white' : 'hover:bg-gray-100'
+            className={`flex h-10 w-10 items-center justify-center rounded-lg ${
+              page === currentPage ? 'bg-primary text-white' : 'hover:bg-accent-3'
             }`}
           >
             {page}
@@ -64,8 +64,8 @@ export default function Pagination({ currentPage, totalPages, category }: Pagina
         {totalPages > 1 && (
           <Link
             href={getPageUrl(totalPages)}
-            className={`flex h-10 w-10 items-center justify-center rounded-full ${
-              currentPage === totalPages ? 'bg-primary text-white' : 'hover:bg-gray-100'
+            className={`flex h-10 w-10 items-center justify-center rounded-lg ${
+              currentPage === totalPages ? 'bg-primary text-white' : 'hover:bg-accent-3'
             }`}
           >
             {totalPages}

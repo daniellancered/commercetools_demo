@@ -23,7 +23,7 @@ export default function ProductList({ products, category }: ProductListProps) {
         description="Discover our hand-picked selection of high-quality furnitures and home decor, designed to bring warmth and texture to any space."
       />
       {products.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-10 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-10 xl:grid-cols-4 mb-40">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
